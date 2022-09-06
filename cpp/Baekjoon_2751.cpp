@@ -1,4 +1,4 @@
-//N°³ÀÇ Á¤¼ö¸¦ ¿À¸§Â÷¼øÀ¸·Î Á¤·ÄÇÏ´Â ¹®Á¦. ½Ã°£º¹Àâµµ°¡ O(nlogn)ÀÎ Á¤·Ä ¹æ½ÄÀ¸·Î Ç®¾î¾ß ÇÑ´Ù. ÄüÁ¤·Ä, º´ÇÕÁ¤·Ä, ÈüÁ¤·Ä ´Ù ÇØº¸±â
+//Nê°œì˜ ì •ìˆ˜ë¥¼ ì˜¤ë¦„ì°¨ìˆœìœ¼ë¡œ ì •ë ¬í•˜ëŠ” ë¬¸ì œ. ì‹œê°„ë³µì¡ë„ê°€ O(nlogn)ì¸ ì •ë ¬ ë°©ì‹ìœ¼ë¡œ í’€ì–´ì•¼ í•œë‹¤. í€µì •ë ¬, ë³‘í•©ì •ë ¬, í™ì •ë ¬ ë‹¤ í•´ë³´ê¸°
 
 
 #include<iostream>
@@ -6,7 +6,7 @@ using namespace std;
 
 
 
-//Äü Á¤·Ä·Î Ç®¾îº¸±â - ½ÇÆĞ...
+//í€µ ì •ë ¬ë¡œ í’€ì–´ë³´ê¸° - ì‹¤íŒ¨...
 /*int partition(int a[], int begin, int end) {
 	int piv = (begin + end) / 2;
 	int L = begin;
@@ -46,7 +46,7 @@ void quickSort(int a[], int begin, int end) {
 	}
 }*/
 
-//º´ÇÕÁ¤·Ä·Î Ç®¾îº¸±â
+//ë³‘í•©ì •ë ¬ë¡œ í’€ì–´ë³´ê¸°
 void merge(int a[], int sorted[], int begin, int middle, int end) {
 	int k = begin;
 	int i = begin;
@@ -75,7 +75,7 @@ void merge(int a[], int sorted[], int begin, int middle, int end) {
 		}
 	}
 
-	for (int z = begin; z <= end; z++) //°³¸ÛÃ»ÇÏ°Ô ÀÌ°Å ¾ÈÇØÁà¼­ Æ²·È¾úÀ½
+	for (int z = begin; z <= end; z++) //ê°œë©ì²­í•˜ê²Œ ì´ê±° ì•ˆí•´ì¤˜ì„œ í‹€ë ¸ì—ˆìŒ
 		a[z] = sorted[z];
 
 }
