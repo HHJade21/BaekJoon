@@ -16,7 +16,7 @@ int main() {
 
 	cin >> n >> k >> m;
 	dir = m;
-	//¼ø¿­ ÀÔ·Â
+	//ìˆœì—´ ìž…ë ¥
 	for (int i = 1; i <= n; i++) {
 		a.push_back(i);
 	}
@@ -24,17 +24,17 @@ int main() {
 	old = it;
 
 	//test code
-	cout << "¿øº» : ";
+	cout << "ì›ë³¸ : ";
 	for (int val : a) {
 		cout << val << " ";
 	}
 	cout << "\n";
 
 
-	//Á¤¹æÇâÀÏ¶§ right == trueÀÌ¹Ç·Î m¹ø for¹® µ¹·Á ¿À¸¥ÂÊ ¿ä¼¼Çª½º Ãâ·Â. right == falseÀÌ¸é ¿ÞÂÊ ¿ä¼¼Çª½º Ãâ·Â
+	//ì •ë°©í–¥ì¼ë•Œ right == trueì´ë¯€ë¡œ më²ˆ forë¬¸ ëŒë ¤ ì˜¤ë¥¸ìª½ ìš”ì„¸í‘¸ìŠ¤ ì¶œë ¥. right == falseì´ë©´ ì™¼ìª½ ìš”ì„¸í‘¸ìŠ¤ ì¶œë ¥
 
 	while (!a.empty()) {
-		//¼ø¿­ÀÇ ´ÙÀ½ ¿ø¼Ò Æ¯Á¤
+		//ìˆœì—´ì˜ ë‹¤ìŒ ì›ì†Œ íŠ¹ì •
 		if (right) {
 			for (int i = 1; i < k; i++) {
 				if (it == --a.end()) 
@@ -51,10 +51,10 @@ int main() {
 					it--;
 			}
 		}
-		//Ãâ·Â
+		//ì¶œë ¥
 		cout << *it << "\n";
 
-		//¹æÇâ Àç¼³Á¤
+		//ë°©í–¥ ìž¬ì„¤ì •
 		dir--;
 		if (dir == 0) {
 			if (right)
@@ -64,7 +64,7 @@ int main() {
 			dir = m;
 		}
 
-		//Ãâ·ÂÇÑ ¿ø¼Ò »èÁ¦
+		//ì¶œë ¥í•œ ì›ì†Œ ì‚­ì œ
 		old = it;
 		if(right) {
 			if (it == --a.end())
