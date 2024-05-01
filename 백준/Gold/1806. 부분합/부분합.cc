@@ -1,7 +1,5 @@
 #include<iostream>
 #include<vector>
-#include<queue>
-#include<algorithm>
 #include<limits.h>
 using namespace std;
 
@@ -12,17 +10,13 @@ int main(){
     cin >> n >> s;
     vector<int> a(n);
     for(int i = 0; i < n; i++)cin>>a[i];
-    while(r<n){
-        if(tmp<s) tmp+=a[r++];
-        else if(l==r)break;
-        else if(l<r) tmp-=a[l++];
-        
-
-        if(tmp>=s) min = min<r-l?min:r-l;
-    }
-    while(tmp>=s && l<r){
-        min = min<r-l?min:r-l;
-        tmp -= a[l++];
+    while(l<=r){
+        if(tmp>=s){
+            min = min<r-l?min:r-l;
+            tmp-=a[l++];
+        }
+        else if(r==n)break;
+        else tmp+=a[r++];
     }
 
     if(min==INT_MAX) cout<< 0;
