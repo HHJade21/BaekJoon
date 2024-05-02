@@ -1,7 +1,5 @@
 #include<iostream>
 #include<vector>
-#include<queue>
-#include<algorithm>
 using namespace std;
 vector<bool> isprime(4000001, 0);
 vector<int> prime;
