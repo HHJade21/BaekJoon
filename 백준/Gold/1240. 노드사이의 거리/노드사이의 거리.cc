@@ -65,13 +65,16 @@ struct node{
 vector<node>g[10001];
 vector<bool>visited(10001,0);
 int n, m, dist=0, s, e, w;
+bool clear = 0;
 
 void dfs(int now){
     if(now==e){
         cout << dist << "\n";
+        clear = true;
         return;
     }
     for(auto i : g[now]){
+        if(clear)break;
         if(!visited[i.v]){
             visited[i.v]=true;
             dist+=i.w;
@@ -92,6 +95,7 @@ int main(){
 
     while(m--){
         dist=0;
+        clear = false;
         visited=vector<bool>(10001,0);
         cin >> s >> e;
         visited[s]=true;
