@@ -1,139 +1,86 @@
-#include<iostream>0
+#include<iostream>
+#include<vector>
+#include<queue>
+#include<algorithm>
+#include<limits.h>
 using namespace std;
 
-int front = -1;
-int rear = -1;
-int playTime = 0;
+queue<int> bodyY;//뱀의 몸이 위치해있는 칸들의 y좌표를 저장할 큐
+queue<int> bodyX;//뱀의 몸이 위치해있는 칸들의 x좌표를 저장할 큐
+int dir=0; //뱀의 머리가 보고 있는 방향을 나타내는 변수. 우하좌상
+int headY=1, headX=1;//뱀의 머리 위치 저장 변수들
+int dy[4]={0,1,0,-1}, dx[4]={1,0,-1,0};//0123에 우하좌상 방향 할당
 
+int main(){
+    ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+    
+    int n, k, ty, tx, l, tmp, time=0;
+    char c;
 
-struct snakeTrail {
-	int y; //행 정보
-	int x; //열 정보
-};
+    cin >> n >> k;
 
-snakeTrail queue[10100];
+    int map[101][101]={0,};//아무것도 없으면 0, 사과가 있으면 1, 뱀이 있으면 2
 
-int snakeBody[100][100] = { 0, };
+    for(int i = 0; i < k; i++){
+        cin >> ty >> tx;//사과 위치 입력받고
+        map[ty][tx]=1;//맵에 배치
+    }
 
+    //뱀 위치 초기 설정
+    bodyY.push(1);
+    bodyX.push(1);
+    map[1][1]=2;//머리 배치
 
-void enqueue(int direction) {
-	int a = 0, b = 0;
-	if (direction == 0) {
-		a = queue[rear].y;
-		b = queue[rear].x + 1;
-	}	
-	else if (direction == 1) {
-		a = queue[rear].y + 1;
-		b = queue[rear].x;
-	}	
-	else if (direction == 2) {
-		a = queue[rear].y;
-		b = queue[rear].x - 1;
-	}	
-	else if (direction == 3) {
-		a = queue[rear].y - 1;
-		b = queue[rear].x;
-	}
+    cin >> l;//방향 전환 횟수
+    queue<int>turnTime;//방향전환할 시간
+    queue<char>turnDir;//전환할 방향
+    for(int i = 0; i < l; i++){//방향 전환 정보 입력
+        cin >> tmp >> c;
+        turnTime.push(tmp);
+        turnDir.push(c);
+    }
 
-	queue[++rear].y = a;
-	queue[rear].x = b;
-	snakeBody[a][b]++;
-	playTime++;
-}
+    while(1){//게임 진행
+        int ny = headY + dy[dir];//다음 이동할 위치의 y좌표
+        int nx = headX + dx[dir];//다음 이동할 위치의 x좌표
+        time++;
+        if(ny<1||nx<1||ny>n||nx>n)//벽에 부딪히는 경우
+            break;//게임 종료
+        else if(map[ny][nx]==2)//자기 몸과 부딪히는 경우
+            break;//게임 종료
+        else if(map[ny][nx]==0){//그냥 빈칸일 경우
+            //머리 이동
+            headY = ny;//일단 head좌표 이동해주고
+            headX = nx;
+            bodyY.push(ny);//큐에 넣어주기
+            bodyX.push(nx);
+            map[ny][nx]=2;//맵에도 표시
+            //머리가 한 칸 이동했으니 꼬리 끝쪽 삭제
+            map[bodyY.front()][bodyX.front()]=0;//맵에서 지워주고
+            bodyY.pop();//큐에서도 삭제
+            bodyX.pop();
+        }
+        else{//사과가 있는 경우
+            //머리 이동
+            headY = ny;//일단 head좌표 이동해주고
+            headX = nx;
+            bodyY.push(ny);//큐에 넣어주기
+            bodyX.push(nx);
+            map[ny][nx]=2;//맵에도 표시
+            //사과를 먹었으므로 꼬리는 움직이지 않는다.
+        }
 
-void dequeue() {
-	front++;
-	snakeBody[queue[front].y][queue[front].x] = 0;
-}
+        if(time == turnTime.front()){//다음 방향 전환 시간일 경우
+            if(turnDir.front()=='L'){//좌회전
+                dir = (dir + 3)%4;
+            }
+            else{//우회전
+                dir = (dir + 1)%4;
+            }
+            turnTime.pop();
+            turnDir.pop();
+        }
+    }
 
-//방향전환은 int dir = 0; (0, 1, 2, 3 == 우, 하, 좌, 상). dir++%4 혹은 dir--%4로 방향전환한다.
-
-
-int main() {
-	int N, appleCount, turnCount, gameCount = 0, direction = 0, t = 0; //t는 0부터 방향바뀔때마다 1씩 증가
-	int tempx, tempy;
-	bool play = 1;
-	cin >> N >> appleCount;
-
-
-	//2차원 맵 생성과 초기화
-	bool** mapVisited = new bool*[N];
-	for (int i = 0; i < N; i++) {
-		mapVisited[i] = new bool[N];
-		for (int j = 0; j < N; j++)
-			mapVisited[i][j] = 0;
-	}
-
-	//사과 위치 표시
-	bool** mapApple = new bool* [N];
-	for (int i = 0; i < N; i++) {
-		mapApple[i] = new bool[N];
-		for (int j = 0; j < N; j++)
-			mapApple[i][j] = 0;
-	}
-
-	//사과 위치 받아서 맵에 표시
-	for (int i = 0; i < appleCount; i++) {
-		cin >> tempx >> tempy;
-		mapApple[tempx - 1][tempy - 1] = 1;
-	}
-
-	//방향전환정보 입력받아 저장
-	cin >> turnCount;
-	int* turnSec = new int[turnCount];
-	char* turnDir = new char[turnCount];
-	for (int i = 0; i < turnCount; i++) {
-		cin >> turnSec[i] >> turnDir[i];
-	}
-
-
-	//뱀 위치 초기화
-	queue[0] = { 0, 0 };
-	rear = 0;
-	snakeBody[0][0] = 1;
-
-	//게임 시작
-	while (play) { //벽이나 자기 몸과 만나면 play가 0이 되며 게임 종료 후 플레이타임 출력
-		gameCount++;
-		if (((queue[rear].y == 0 && direction == 3) || (queue[rear].y == N - 1 && direction == 1)) || ((queue[rear].x == 0 && direction == 2) || (queue[rear].x == N - 1 && direction == 0))) {
-			play = 0;
-			break;
-		}
-		enqueue(direction);
-		if (snakeBody[queue[rear].y][queue[rear].x] > 1) {
-			play = 0;
-			break;
-		}
-		else if (mapApple[queue[rear].y][queue[rear].x] == 1) {
-			mapApple[queue[rear].y][queue[rear].x] = 0;
-		}
-		else
-			dequeue();
-		
-		if ((t < turnCount) && (gameCount == turnSec[t])) {
-			if (turnDir[t] == 'D')
-				direction = (direction + 1) % 4;
-			else
-				direction = (direction + 3) % 4;
-			t++;
-		}
-
-	}
-
-
-	cout << gameCount;
-
-
-	//2차원 맵 할당 해제
-	for (int i = 0; i < N; i++)
-		delete[] mapVisited[i];
-	delete[] mapVisited;
-	for (int i = 0; i < N; i++)
-		delete[] mapApple[i];
-	delete[] mapApple;
-
-	//방향전환정보 할당 해제
-	delete[] turnSec;
-	delete[] turnDir;
-
+    cout << time;
 }
