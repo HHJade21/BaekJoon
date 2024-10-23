@@ -73,7 +73,6 @@ void cheese(){
         
         int size = bfsQ.size();
         time++;
-        if(airQ.size())air();
         for(int i = 0; i<size; i++){
             int y = bfsQ.front().y, x = bfsQ.front().x;
             bfsQ.pop();
