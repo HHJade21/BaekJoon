@@ -5,42 +5,41 @@
 #include<limits.h>
 using namespace std;
 
-struct node{
+struct e{
     int v;
     int w;
 };
 
 struct cmp{
-    bool operator()(node a, node b){
+    bool operator()(e a, e b){
         return a.w>b.w;
     }
 };
 
-int n, m,a,b,s,e,w,sp,ep;
-
 int main(){
     ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+    int n, m, a, b,w,strt,dest;
     cin>>n>>m;
-
-    vector<node>g[n+1];
-    bool visited[n+1]={0,};
-    priority_queue<node, vector<node>,cmp>pq;
+    vector<e>g[n+1];
     vector<int>dist(n+1,INT_MAX);
+    vector<bool>vis(n+1,0);
+    priority_queue<e, vector<e>, cmp> pq;
 
-    while(m--){
-        cin>>s>>e>>w;
-        g[s].push_back({e,w});
+    for(int i = 0; i < m; i++){
+        cin>> a >> b >> w;
+        g[a].push_back({b,w});
     }
+    cin>>strt>>dest;
 
-    cin>>sp;
-    pq.push({sp,0});
-    dist[sp]=0;
-    
-    while(!pq.empty()){
+    pq.push({strt,0});
+    dist[strt]=0;
+
+    while(pq.size()){
         int now = pq.top().v;
         pq.pop();
-        if(visited[now])continue;
-        visited[now]=true;
+        if(vis[now])continue;
+        vis[now]=1;
+
         for(auto i : g[now]){
             if(dist[i.v]>dist[now]+i.w){
                 dist[i.v]=dist[now]+i.w;
@@ -48,7 +47,5 @@ int main(){
             }
         }
     }
-    cin>>ep;
-    cout<<dist[ep];
-
+    cout<<dist[dest];
 }
