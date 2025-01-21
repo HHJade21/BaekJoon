@@ -31,19 +31,18 @@ int main(){
     }
     cin>>strt>>dest;
 
-    pq.push({strt,0});
     dist[strt]=0;
+    pq.push({strt,0});
 
     while(pq.size()){
-        int now = pq.top().v;
+        int v = pq.top().v;
         pq.pop();
-        if(vis[now])continue;
-        vis[now]=1;
-
-        for(auto i : g[now]){
-            if(dist[i.v]>dist[now]+i.w){
-                dist[i.v]=dist[now]+i.w;
-                pq.push({i.v, dist[i.v]});
+        if(vis[v])continue;
+        vis[v]=true;
+        for(auto i : g[v]){
+            if(dist[i.v]>dist[v]+i.w){
+                dist[i.v]=dist[v]+i.w;
+                pq.push({i.v,dist[i.v]});
             }
         }
     }
