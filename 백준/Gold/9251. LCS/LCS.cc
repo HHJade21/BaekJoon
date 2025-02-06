@@ -20,9 +20,5 @@ int main(){
             }
         }
     }
-    int ans=0;
-    for(int i = 1; i <= a.size();i++){
-        ans = max(dp[b.size()][i], ans);
-    }
-    cout << ans;
+    cout << dp[b.size()][a.size()];
 }
