@@ -1,22 +1,20 @@
 #include<iostream>
 #include<vector>
+#include<queue>
+#include<algorithm>
+#include<limits.h>
 using namespace std;
 
-int main(void) {
-	int A = 0, B = 0, i = 0;
-	vector<int> v;
-	while(1) {
-		cin >> A >> B;
-		if ((A == 0) && (B == 0))
-			break;
-		else {
-			v.push_back(A+B);
-			i++;
-		}
-	}
-	
-	for (int j = 0; j < i; j++) {
-		cout << v[j] << "\n";
-	}
-	
+int main(){
+    ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+    //블루레이의 크기에 대해서 매개변수 탐색. 
+    int a,b;
+
+    while(a!=0 || b!=0){
+        cin>>a>>b;
+
+        if(a!=0||b!=0){
+            cout << a+b<<"\n";
+        }
+    }
 }
