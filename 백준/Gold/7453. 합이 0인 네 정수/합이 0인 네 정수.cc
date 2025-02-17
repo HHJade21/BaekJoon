@@ -29,7 +29,7 @@ int main(){
         tmp = -sumAB[i];
         auto it = lower_bound(sumCD.begin(), sumCD.end(), tmp);
         if(it == sumCD.end())continue;
-        if(*it == tmp) ans += (long long)(upper_bound(sumCD.begin(), sumCD.end(), tmp)-it);
+        if(*it == tmp) ans += (upper_bound(sumCD.begin(), sumCD.end(), tmp)-it);
     }
     cout << ans;
 }
