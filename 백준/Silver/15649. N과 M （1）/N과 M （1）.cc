@@ -1,34 +1,30 @@
 #include<iostream>
-#include<vector>
-#include<queue>
-#include<algorithm>
-#include<limits.h>
+#include<vector> 
 using namespace std;
 int n,m;
 vector<int>ans;
-vector<bool>visited;
+vector<int>vis(9);
+
 void comb(int now, int depth){
     if(depth<m){
-        for(int i = 1; i <= n; i++){
-            if(visited[i])continue;
-
-            visited[i]=true;
+        for(int i = 1; i <=n; i++){
+            if(vis[i])continue;
+            vis[i]=1;
             ans.push_back(i);
             comb(i, depth+1);
-            visited[i]=false;
+            vis[i]=0;
             ans.pop_back();
         }
     }
     else{
-        for(auto i : ans)cout << i  << " ";
+        for(auto i : ans)cout << i << " ";
         cout<<"\n";
+        return;
     }
-
 }
 
 int main(){
     ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
-    cin >> n >> m;
-    visited=vector<bool>(n+1,0);
-    comb(0, 0);
+    cin>>n >> m;
+    comb(0,0);
 }
