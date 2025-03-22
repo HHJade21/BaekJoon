@@ -20,12 +20,6 @@ int main(){
         return 0;
     }
 
-    for(int i = 0 ; i < n ;i++){
-        if(a[i]>sum/two){
-            cout<<"OUT";
-            return 0;
-        }
-    }
 
     cout << "DIMI";
 }
