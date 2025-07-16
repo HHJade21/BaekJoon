@@ -4,7 +4,7 @@
 #include<algorithm>
 #include<limits.h>
 using namespace std;
-vector<vector<vector<long long>>> dp(10,vector<vector<long long>>(101, vector<long long>(1024,0)));
+vector<vector<vector<int>>> dp(10,vector<vector<int>>(101, vector<int>(1024,0)));
 
 int main(){
     ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
@@ -34,7 +34,7 @@ int main(){
         //이번 자리를 1~8로 채울 경우
         for(int k = 1; k<=8; k++){
             for(int j = 1; j<1024; j++){//이전 계단수의 모든 경우의 수
-                dp[k][i][j|mask] = (dp[k][i][j|mask] + dp[k-1][i-1][j] + dp[k+1][i-1][j])%1000000000;
+                dp[k][i][j|(1<<k)] = (dp[k][i][j] + dp[k-1][i-1][j] + dp[k+1][i-1][j])%1000000000;
             }
             mask*=2;
         }
