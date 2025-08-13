@@ -21,13 +21,7 @@ int main() {
 		result = 1;
 		for (int j = 0; j < n; j++) {
 			cin >> temp >> tempKey;
-			auto category = clothes.find(tempKey);
-			if (category != clothes.end()) {
-				category->second++;
-			}
-			else {
-				clothes.insert({ tempKey, 1 });
-			}
+			clothes[tempKey]++;
 		}
 		for (auto iter = clothes.begin(); iter != clothes.end(); iter++) {
 			result *= (iter->second) + 1;
