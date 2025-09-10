@@ -1,47 +1,51 @@
-#include <bits/stdc++.h>
+#include<iostream>
+#include<vector>
+#include<queue>
+#include<algorithm>
+#include<limits.h>
 using namespace std;
-queue<pair<int,int>> q;
-int box[1000][1000]={0,};
-int dy[4]={-1,1,0,0},dx[4]={0,0,-1,1}, cnt = -1, tt=0,n,m;
+
+int map[1001][1001],n,m,dy[4]={1,-1,0,0},dx[4]={0,0,1,-1},cnt=0,v[1001][1001],day=-1;
+queue<pair<int,int>>q;
 
 void bfs(){
-    while(q.size()){
-        int size=q.size();
-        cnt++;
-        for(int i = 0; i < size;i++){
-            int y = q.front().first;
-            int x = q.front().second;
+    while(!q.empty()){
+        int size= q.size();
+        day++;
+        for(int i = 0; i < size; i++){
+            int y = q.front().first, x = q.front().second;
             q.pop();
-
-            for(int j = 0; j < 4; j++){
-                int ny = y+dy[j], nx = x+dx[j];
-                if(ny<0||ny>=n||nx<0||nx>=m)continue;
-                if(box[ny][nx])continue;
-
+            for(int j = 0; j<4; j++){
+                int ny = y+dy[j], nx = x+dx[j];//전후좌우 탐색 좌표
+                if(ny<=0 || nx<=0|| ny>n || nx>m)continue;
+                if(map[ny][nx]!=0)continue;
+                if(v[ny][nx])continue;
                 q.push({ny,nx});
-                box[ny][nx]=1;
-                tt--;
+                v[ny][nx]=1;
+                cnt--;
             }
         }
     }
 }
 
-int main()
-{
-    cin >> m >> n;
-    for(int i=0; i<n; i++){
-        for(int j=0; j<m; j++){
-            cin >> box[i][j];
-            if(box[i][j]==1){
+int main(){
+    ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+    cin>>m>>n;
+    for(int i = 1 ;i <= n;i++){
+        for(int j = 1; j<=m; j++){
+            cin>>map[i][j];
+            if(map[i][j]==1){
                 q.push({i,j});
+                v[i][j]=1;
             }
-            else if(box[i][j]==0){
-                tt++;
-            }
+            else if(map[i][j]==0)cnt++;
         }
     }
+    if(cnt==0){
+        cout<<0;
+        return 0;
+    }
     bfs();
-
-    if(tt>0) cout << "-1";
-    else cout << cnt;
+    if(cnt==0)cout<<day;
+    else cout<<-1;
 }
