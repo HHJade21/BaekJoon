@@ -7,15 +7,16 @@ using namespace std;
 
 vector<int>g[100001];
 int depth[100001];
-int s,d,n,x,y,ans;
+int s,d,n,x,y,ans=0;
 
 int dfs(int now, int bef){
+    int cut=0;
     for(auto i : g[now]){
         if(i!=bef)
-            depth[now]=max(depth[now],dfs(i,now)+1);
+            cut=max(cut,dfs(i,now)+1);
     }
-    if(depth[now]>=d && now!=s)ans++;
-    return depth[now];
+    if(cut>=d&&now!=s)ans++;
+    return cut;
 }
 
 int main(){
