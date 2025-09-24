@@ -17,7 +17,7 @@ void comb(int now, int depth){
         }
     }
     else{
-        for(auto i : ans)cout << i << " ";
+        for(int i : ans)cout << i << " ";
         cout<<"\n";
         return;
     }
