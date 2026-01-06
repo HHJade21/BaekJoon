@@ -1,10 +1,7 @@
 n=int(input())
-res=""
-for _ in range(n):
+res=list(input())
+for _ in range(n-1):
     s=input()
-    if res == "":
-        res = list(s)
-        continue
     for i in range(len(s)):
         if(s[i]!=res[i]):
             res[i]='?'
