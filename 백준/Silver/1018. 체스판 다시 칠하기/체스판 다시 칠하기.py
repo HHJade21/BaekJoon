@@ -1,14 +1,13 @@
 bw = []
 wb = []
 
-for i in range(50):
+for i in range(8):
     if i%2 == 0 :
-        bw.append("BW"*25)
-        wb.append("WB"*25)
+        bw.append("BW"*4)
+        wb.append("WB"*4)
     else:
-        bw.append("WB"*25)
-        wb.append("BW"*25)
-
+        bw.append("WB"*4)
+        wb.append("BW"*4)
 
 n,m=map(int,input().split())
 chess = []
