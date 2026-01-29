@@ -1,15 +1,9 @@
-from queue import Queue
+from collections import deque
+n=int(input())
+dq = deque(range(1,n+1))
 
-que = Queue() #큐 선언
+for i in range(n-1):
+    dq.popleft()
+    dq.append(dq.popleft())
 
-n = int(input())
-
-for i in range(1, n+1):
-    que.put(i)
-
-while(que.qsize() > 1):
-    que.get()
-    que.put(que.get())
-
-print(que.queue[0])
-
+print(dq[0])
