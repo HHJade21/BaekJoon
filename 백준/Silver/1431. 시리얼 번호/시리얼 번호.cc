@@ -12,18 +12,17 @@ struct st{
 };
 
 bool cmp(st a, st b){
-    if(a.len==b.len){
-        int aa=0,bb=0;
-        for(auto c : a.s){
-            if('0'<=c && c<= '9')aa+=c-'0';
-        }
-        for(auto c : b.s){
-            if('0'<=c && c<= '9')bb+=c-'0';
-        }
-        if(aa==bb)return a.s<b.s;
-        return aa<bb;
+    if (a.len!=b.len)return a.len<b.len;
+
+    int aa=0,bb=0;
+    for(auto c : a.s){
+        if('0'<=c && c<= '9')aa+=c-'0';
     }
-    return a.len<b.len;
+    for(auto c : b.s){
+        if('0'<=c && c<= '9')bb+=c-'0';
+    }
+    if(aa==bb)return a.s<b.s;
+    return aa<bb;
 }
 
 int main(){
