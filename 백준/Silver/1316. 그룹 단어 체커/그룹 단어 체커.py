@@ -1,19 +1,17 @@
-a=int(input())
+n=int(input())
 ans=0
-for i in range(a):
-    group = 1
-    chk = [0]*26
+
+for _ in range(n):
     s = input()
-    chk[ord(s[0])-ord('a')] = 1
-    for j in range(1,len(s)):
-        if chk[ord(s[j])-ord('a')] == 0: 
-            chk[ord(s[j])-ord('a')] = 1
-        elif s[j] != s[j-1] :
-            group = 0
-            break 
-    if(group == 1):
+    group=1
+    cnt=[0]*26
+    cnt[ord(s[0])-97]=1
+    for i in range(1, len(s)):
+        if s[i]!=s[i-1]:
+            if cnt[ord(s[i])-97]==1:
+                group=0
+            else:
+                cnt[ord(s[i])-97]=1
+    if group :
         ans+=1
 print(ans)
-            
-
-
